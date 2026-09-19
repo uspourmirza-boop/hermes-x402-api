@@ -1,0 +1,17 @@
+# Render Blueprint for x402 Earning API
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: hermes-x402-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --host 0.0.0.0 --port $PORT --workers 2 --timeout 30
+    envVars:
+      - key: RECEIVING_WALLET
+        value: "0xYOUR_WALLET_ADDRESS_HERE"
+      - key: PYTHON_VERSION
+        value: "3.13.2"
+    healthCheckPath: /health
+    autoDeploy: true
